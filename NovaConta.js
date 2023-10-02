@@ -1,40 +1,41 @@
 import { StyleSheet, Text, TextInput, View } from "react-native"
-import Botao from "../Components/Botao"
+import Botao from "./Components/Botao"
 import { useState } from "react"
 
-
-const NovaConta = () =>{
-
+const NovaConta = () => {
     const [txtEmail, setEmail] = useState('')
     const [txtSenha, setSenha] = useState('')
     const [txtSenha2, setSenha2] = useState('')
     const [txtAlerta, setAlerta] = useState('')
 
     const validar = () => {
-        if(txtSenha != txtSenha2){
+        if (txtSenha !== txtSenha2) {
             setAlerta("Senhas estão diferentes")
-            //console.log({txtSenha})
-        }
-        else if(txtEmail != 0 ){
-            setAlerta("Email Invalido")
-        }
-        else{
+        } else if (!validarEmail(txtEmail)) {
+            setAlerta("Email inválido")
+        } else {
             setAlerta('')
-            //cadastrar usuario
+            // Cadastrar o usuário
         }
     }
-    
-    return(
+
+    const validarEmail = (email) => {
+        // Expressão regular para validar o formato do e-mail
+        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+        return regex.test(email)
+    }
+
+    return (
         <View style={estilo.tela}>
             <View style={estilo.parte1}>
                 <View>
                     <Text style={estilo.Texto}>E-mail</Text>
-                    <TextInput style={estilo.escrita} value={txtEmail} onChangeText={setEmail}/>
+                    <TextInput style={estilo.escrita} value={txtEmail} onChangeText={setEmail} />
                 </View>
 
-                <View >
+                <View>
                     <Text style={estilo.Texto}>Senha</Text>
-                    <TextInput style={estilo.escrita} secureTextEntry={true} value={txtSenha} onChangeText={setSenha}/>
+                    <TextInput style={estilo.escrita} secureTextEntry={true} value={txtSenha} onChangeText={setSenha} />
                 </View>
 
                 <View>
@@ -45,45 +46,42 @@ const NovaConta = () =>{
             </View>
 
             <View style={estilo.botao}>
-                <Botao texto="CADASTRAR" funcao={validar}/>
+                <Botao texto="CADASTRAR" funcao={validar} />
             </View>
 
         </View>
     )
 }
 
-
 const estilo = StyleSheet.create({
-    tela:{
+    tela: {
         backgroundColor: '#372775',
         padding: 35,
         flex: 1
     },
-    parte1:{
+    parte1: {
         flex: 0.75,
         justifyContent: "center",
         gap: 10
     },
-    Texto:{
+    Texto: {
         fontFamily: 'AveriaLibre-Regular',
         fontSize: 24,
         color: '#ffffff'
     },
-    escrita:{
+    escrita: {
         backgroundColor: '#ffffff',
         fontFamily: 'AveriaLibre-Regular',
         fontSize: 24,
         color: '#3F92C5'
-
     },
-    errou:{
+    errou: {
         fontSize: 20,
         color: 'red'
     },
-    botao:{
+    botao: {
         flex: 0.25,
     }
 })
 
-
-export default NovaConta
+export default NovaConta;
