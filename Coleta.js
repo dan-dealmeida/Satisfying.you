@@ -3,7 +3,7 @@ import { View, Text, Button, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const ColetaScreen = ({ navigation }) => {
-
+  
   return (
     <View style={styles.container}>
       <Text style={styles.coletaText}>O que você achou do Carnaval 2024?</Text>
@@ -58,7 +58,9 @@ const styles = StyleSheet.create({
     fontSize: 24,
     color: 'white',
     fontFamily: 'AveriaLibre-Bold', // Fonte personalizada
-    marginBottom: 20,
+    marginBottom: 80,
+    margin: 10,
+    textAlign: 'center',
   },
   messageText: {
     fontSize: 16,
