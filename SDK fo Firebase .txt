@@ -1,0 +1,17 @@
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyCCdgisV97mvPdDqBAbxdCNaFqTCb9HKAs",
+  authDomain: "dndmobile-e8252.firebaseapp.com",
+  projectId: "dndmobile-e8252",
+  storageBucket: "dndmobile-e8252.appspot.com",
+  messagingSenderId: "77982866499",
+  appId: "1:77982866499:web:49c210f8e0ce149cf608f6"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
