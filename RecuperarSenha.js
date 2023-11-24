@@ -1,67 +1,83 @@
 import { StyleSheet, Text, TextInput, View } from "react-native";
-import Botao from "./Components/Botao";
+import Botao from "../Components/Botao";
 import { useState } from "react";
+import { sendPasswordResetEmail } from "firebase/auth";
+import { auth_mod } from "../Firebase/conf";
 
-const RecuperarSenha = (props) => {
-    const [txtEmail, setEmail] = useState('');
-    const [txtError, setError] = useState('');
+const RecuperarSenha = (props) =>{
+
+    const [txtEmail, setEmail] = useState('')
+    const [txtError, setError] = useState('')
+
+    
 
     const validar = () => {
-        // Expressão regular para verificar o formato do e-mail
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-        if (!emailRegex.test(txtEmail)) {
-            setError('E-mail inválido');
-        } else {
-            setError('');
-            // Lógica para enviar o e-mail de recuperação de senha
+        if(txtEmail === ""){
+            setError('E-mail invalido')
         }
+        else{
+            setError("")
+
+            sendPasswordResetEmail(auth_mod, txtEmail)
+            .then((user) =>{
+                console.log("Email envia com sucesso")
+            })
+            .catch((error) =>{
+                console.log("Email invalido")
+            })
+        }
+        
     }
 
-    return (
+    return(
         <View style={estilo.tela}>
             <View style={estilo.cImput}>
-                <Text style={estilo.Texto}>E-mail:</Text>
-                <TextInput style={estilo.escrita} value={txtEmail} onChangeText={setEmail} />
+                <Text style={estilo.Texto} >E-mail: </Text>
+                <TextInput style={estilo.escrita}  value={txtEmail} onChangeText={setEmail}/>
                 <Text style={estilo.erroou}>{txtError}</Text>
             </View>
 
             <View style={estilo.cBotao}>
-                <Botao texto="Recuperar" funcao={validar} />
+                <Botao texto="Recuperar" funcao={validar}/>
             </View>
+
         </View>
+
     )
 }
 
 const estilo = StyleSheet.create({
-    erroou: {
+    erroou:{
         fontSize: 20,
         color: 'red'
     },
-    Texto: {
+    Texto:{
         fontFamily: 'AveriaLibre-Regular',
         fontSize: 24,
         color: '#ffffff'
     },
-    tela: {
+    tela:{
         backgroundColor: '#372775',
         padding: 35,
         flex: 1
+        
     },
-    escrita: {
+    escrita:{
         backgroundColor: '#ffffff',
         fontFamily: 'AveriaLibre-Regular',
         fontSize: 24,
         color: '#3F92C5'
     },
-    cImput: {
+    cImput:{
         flex: 0.5,
         justifyContent: "flex-end"
+
+        
     },
-    cBotao: {
+    cBotao:{
         flex: 0.25,
         justifyContent: "center"
     }
 })
 
-export default RecuperarSenha;
+export default RecuperarSenha

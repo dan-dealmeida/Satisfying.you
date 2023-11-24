@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth_mod } from '../Firebase/conf';
+import { configureLayoutAnimations } from 'react-native-reanimated/lib/typescript/reanimated2/core';
 
-const LoginScreen = ({ navigation }) => {
+
+const LoginScreen = (props) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isEmailValid, setIsEmailValid] = useState(true);
@@ -16,16 +20,23 @@ const LoginScreen = ({ navigation }) => {
 
   const handleLogin = () => {
     if (validateEmail()) {
-      // Implemente a lógica de autenticação aqui
+      signInWithEmailAndPassword(auth_mod, email, password)
+        .then((user) => {
+          console.log(auth_mod.currentUser.uid)
+          props.navigation.navigate('TelaTeste')
+        })
+        .catch((error) =>{
+          console.log(error)
+        })
     }
   };
 
   const handleForgotPassword = () => {
-    // Implemente a lógica para redefinir a senha aqui
+    props.navigation.navigate('RecuperarSenha')
   };
 
   const handleCreateAccount = () => {
-    // Implemente a lógica para criar uma nova conta aqui
+    props.navigation.navigate('NovaConta')
   };
 
   return (
