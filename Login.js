@@ -3,6 +3,8 @@ import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth_mod } from '../Firebase/conf';
+import { useDispatch} from "react-redux"
+import { reducerSetId } from '../../redux/uidSlice';
 import { configureLayoutAnimations } from 'react-native-reanimated/lib/typescript/reanimated2/core';
 
 
@@ -10,6 +12,8 @@ const LoginScreen = (props) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isEmailValid, setIsEmailValid] = useState(true);
+
+  const dispatch  = useDispatch()
 
   const validateEmail = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -22,7 +26,9 @@ const LoginScreen = (props) => {
     if (validateEmail()) {
       signInWithEmailAndPassword(auth_mod, email, password)
         .then((user) => {
-          console.log(auth_mod.currentUser.uid)
+          dispatch(reducerSetId({
+            uid: auth_mod.currentUser.uid
+          }))
           props.navigation.navigate('TelaTeste')
         })
         .catch((error) =>{

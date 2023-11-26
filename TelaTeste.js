@@ -1,10 +1,16 @@
 import { View, Text, TextInput, StyleSheet } from "react-native";
 import { useState } from "react";
 import Botao from "../Components/Botao"
+
+import {useSelector} from 'react-redux'
+
 const TelaTeste = (props) => {
 
     const [txtEmail, setEmail] = useState('')
     const [txtola, setola ] = useState('')
+
+    const uid = useSelector((state) => state.id.uid)
+    
 
     const mostraEmail = () => {
         setola("Ola Mundo")
@@ -14,7 +20,7 @@ const TelaTeste = (props) => {
         <View>
 
             <View>
-                <Text style={estilo.texto}>Email </Text>
+                <Text style={estilo.texto}>Email {uid} </Text>
                 <TextInput style={estilo.fundo} value={txtEmail} onChangeText={setEmail} />
 
 

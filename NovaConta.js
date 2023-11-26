@@ -3,6 +3,8 @@ import Botao from "../Components/Botao"
 import { useState } from "react"
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth_mod } from '../Firebase/conf';
+import { useDispatch} from "react-redux"
+import { reducerSetId } from '../../redux/uidSlice';
 
 
 const NovaConta = (props) =>{
@@ -12,7 +14,10 @@ const NovaConta = (props) =>{
     const [txtSenha2, setSenha2] = useState('')
     const [txtAlerta, setAlerta] = useState('')
 
+    const dispatch  = useDispatch()
+
     const validar = () => {
+
         if(txtSenha != txtSenha2){
             setAlerta("Senhas estão diferentes")
         
@@ -24,7 +29,9 @@ const NovaConta = (props) =>{
             setAlerta('')
             createUserWithEmailAndPassword(auth_mod, txtEmail, txtSenha)
                 .then((user) => {
-                    console.log(auth_mod.currentUser.uid)
+                    dispatch(reducerSetId({
+                        uid: auth_mod.currentUser.uid
+                      }))
                     props.navigation.navigate('TelaTeste')
                 })
                 .catch((error) => {
