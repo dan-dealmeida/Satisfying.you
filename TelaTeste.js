@@ -2,15 +2,15 @@ import { View, Text, TextInput, StyleSheet } from "react-native";
 import { useState } from "react";
 import Botao from "../Components/Botao"
 
-import {useSelector} from 'react-redux'
+import {useSelector} from 'react-redux'  //importação para usar o redux
 
 const TelaTeste = (props) => {
 
     const [txtEmail, setEmail] = useState('')
     const [txtola, setola ] = useState('')
 
-    const uid = useSelector((state) => state.id.uid)
-    
+    const uid = useSelector((state) => state.id.uid)  // variavel que recebe o valor da store
+    // agora tu tem o uid para usar no app
 
     const mostraEmail = () => {
         setola("Ola Mundo")
@@ -20,7 +20,7 @@ const TelaTeste = (props) => {
         <View>
 
             <View>
-                <Text style={estilo.texto}>Email {uid} </Text>
+                <Text style={estilo.texto}>Email {uid} </Text> 
                 <TextInput style={estilo.fundo} value={txtEmail} onChangeText={setEmail} />
 
 
