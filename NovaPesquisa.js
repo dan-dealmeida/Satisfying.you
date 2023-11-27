@@ -1,6 +1,7 @@
-import { Image, StyleSheet, Text, TextInput, View } from "react-native"
+import { Alert, Image, StyleSheet, Text, TextInput, View } from "react-native"
 import Botao from "../Components/Botao"
 import { useState } from "react"
+import { launchCamera, launchImageLibrary} from "react-native-image-picker"
 
 
 
@@ -14,6 +15,8 @@ const NovaPesquisa = () => {
     const [alertaNome, setalertaNome] = useState('')
     const [alertaData,  setalertaData] = useState('')
     const [alertaImg, setAlertaImg] = useState('')
+    const [urlFoto, seturlFoto] = useState('')
+    const [foto, setFoto] = useState()
     
     const validar = () =>{
         if(txtNome === ''){
@@ -22,15 +25,33 @@ const NovaPesquisa = () => {
         else if(timeData === ""){
             setalertaNome ("")
             setalertaData ('Preencha a data')
-        }else if(Imag === ""){
-            setalertaNome ("")
-            setalertaData ("")
-            setAlertaImg("Colocar a imagem")
              
         }else{
             //cadastro
         }
 
+    }
+
+    const capiturarIMG = () =>{
+        launchCamera({mediaType: 'photo', cameraType: 'back', quality: 1})
+        .then((result) =>{
+            seturlFoto(result.assets[0].uri)
+            setFoto(result.assets[0])
+        })
+        .catch((error) =>{
+            Alert("algo deu errado")
+        })
+    }
+
+    const carregarIMG = () =>{
+        launchImageLibrary()
+        .then((result) =>{
+            seturlFoto(result.assets[0].uri)
+            setFoto(result.assets[0])
+        })
+        .catch((error) =>{
+            Alert("algo deu errado")
+        })
     }
 
 
@@ -51,9 +72,10 @@ const NovaPesquisa = () => {
                 </View>
 
                 <View>
-                    <Text style={estilo.Texto}>Imagem</Text>
-                    <TextInput style={estilo.escrita} placeholder="Câmera/Galeria de imagens"  value={Imag} onChangeText={setImg}/>
-                    <Text style={estilo.errou}>{alertaImg}</Text>
+                    <Botao style={estilo.botao} texto='Capiturar Imagem' funcao={capiturarIMG}/>
+                    <Botao style={estilo.botao} texto='Carregar Imagem' funcao={carregarIMG}/>
+
+                    <Image source={{uri : urlFoto}} style={{width: 300 , height: 150, paddingTop: 10}} />
                     
                 </View>
 
@@ -100,7 +122,7 @@ const estilo = StyleSheet.create({
     },
     botao:{
         flex: 0.1,
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
     vacuo:{
         flex: 0.15
